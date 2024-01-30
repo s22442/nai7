@@ -1,0 +1,21 @@
+[package]
+name = "bins"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+[[bin]]
+name = "train"
+path = "train.rs"
+
+[[bin]]
+name = "sample"
+path = "sample.rs"
+
+[dependencies]
+utils.workspace = true
+tch.workspace = true
+
+[lints]
+workspace = true
