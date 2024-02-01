@@ -1,3 +1,14 @@
+/// This program implements a bot that through the use of reinforcement learning
+/// learns how to efficiently play a game of Space Invaders.
+///
+/// To run this project make sure that you:
+///    - run a following command: pip install 'autorom[accept-rom-license]'
+///    - run a following command: pip install 'gym[atari]'
+///    - install [Rust](https://www.rust-lang.org/tools/install)
+///
+/// Project created by:
+///    Kajetan Welc
+///    Daniel Wirzba
 use tch::{nn::VarStore, Device};
 use utils::{env, panic_hook, ppo::PPO};
 
@@ -7,6 +18,8 @@ const EVAL_INTERVAL: usize = 50;
 
 const SAVE_INTERVAL: usize = 1000;
 
+/// This function focuses on initializing and then building the actor and critic
+/// while also later on teaching the model itself.
 fn main() {
     panic_hook::init();
 

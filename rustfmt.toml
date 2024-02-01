@@ -1,0 +1,8 @@
+edition = "2021"
+format_strings = true
+newline_style = "Unix"
+normalize_comments = true
+normalize_doc_attributes = true
+unstable_features = true
+version = "Two"
+wrap_comments = true

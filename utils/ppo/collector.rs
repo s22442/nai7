@@ -1,3 +1,14 @@
+/// This program implements a bot that through the use of reinforcement learning
+/// learns how to efficiently play a game of Space Invaders.
+///
+/// To run this project make sure that you:
+///    - run a following command: pip install 'autorom[accept-rom-license]'
+///    - run a following command: pip install 'gym[atari]'
+///    - install [Rust](https://www.rust-lang.org/tools/install)
+///
+/// Project created by:
+///    Kajetan Welc
+///    Daniel Wirzba
 use std::{sync::Arc, thread};
 
 use crossbeam::channel::{self, Receiver, Sender};
@@ -10,6 +21,11 @@ use crate::env::Env as EnvTrait;
 
 use crate::model;
 
+/// Below is a definition of a data collector for a RL environment designed to
+/// collect data from multiple parallel instances of the environment
+/// Payload struct and later implementation of it defines a data structure to
+/// hold all the necessary information about observations, actions and rewards
+/// representable in tensors
 #[must_use]
 pub struct Payload {
     pub observations: Tensor,
@@ -38,7 +54,8 @@ impl Payload {
         }
     }
 }
-
+/// The Broadcast enum defines different broadcast messages for controlling the
+/// behaviour of collecting threads
 enum Broadcast {
     Collect,
     PullGlobalActorVs,
@@ -56,7 +73,8 @@ where
     broadcast_rx: &'a Receiver<Broadcast>,
     collecting_tx: &'a Sender<Payload>,
 }
-
+/// This function spawns a collecting thread that interacts with the environment
+/// and sends collected data to the main thread
 fn spawn_collecting_thread<Env>(
     CollectingThreadOptions {
         broadcast_rx,
@@ -144,6 +162,9 @@ where
 }
 
 #[must_use]
+/// The Collector struct and later implementation of it manages multiple
+/// collecting threads and provides methods for collecting data and
+/// synchronizing global actor variables
 pub struct Collector {
     num_threads: usize,
     thread_handles: Vec<thread::JoinHandle<()>>,
@@ -258,7 +279,8 @@ impl Collector {
             rewards,
         }
     }
-
+    /// This method synchronizes the global actor variables across collecting
+    /// threads
     pub fn sync_collecting_actors(&self) {
         for _ in 0..self.num_threads {
             self.broadcaster.send(Broadcast::PullGlobalActorVs).unwrap();

@@ -1,6 +1,27 @@
+/// This program implements a bot that through the use of reinforcement learning
+/// learns how to efficiently play a game of Space Invaders.
+///
+/// To run this project make sure that you:
+///    - run a following command: pip install 'autorom[accept-rom-license]'
+///    - run a following command: pip install 'gym[atari]'
+///    - install [Rust](https://www.rust-lang.org/tools/install)
+///
+/// Project created by:
+///    Kajetan Welc
+///    Daniel Wirzba
 use derive_setters::Setters;
 use tch::{Device, Kind, Tensor};
 
+/// following 3 structs are defined:
+/// - Sampler - responsible for generating samples with multiple parameters
+///   defining its work
+/// - `ActorSample` - represents a sample generated for an actor in RL, later
+///   initialized in the Sampler implementation
+/// - Critic Sample - represents a sample generated for a critic in R, later
+///   initialized in the Sampler implementation
+/// Beside that `ActorSample` and `CriticSample` are used to calculate the loss
+/// between the values produced by the agent and the optimal values with the use
+/// of a PPO algorithm and also to train the models themselves.
 #[must_use]
 #[derive(Setters, Debug)]
 #[setters(prefix = "fill_", borrow_self)]

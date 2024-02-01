@@ -1,3 +1,18 @@
+/// This program implements a bot that through the use of reinforcement learning
+/// learns how to efficiently play a game of Space Invaders.
+///
+/// To run this project make sure that you:
+///    - run a following command: pip install 'autorom[accept-rom-license]'
+///    - run a following command: pip install 'gym[atari]'
+///    - install [Rust](https://www.rust-lang.org/tools/install)
+///
+/// Project created by:
+///    Kajetan Welc
+///    Daniel Wirzba
+
+/// Below are the implementations for computing advantages and returns, which
+/// are essential components in the RL PPO algorithm for estimating the quality
+/// of actions and sequences of actions
 use std::rc::Rc;
 
 use tch::{nn::Module, Device, Kind, Tensor};
@@ -5,6 +20,9 @@ use typed_builder::TypedBuilder;
 
 use crate::model;
 
+// From Pytorch a class wrapper around the Generalized Advantage Estimate
+// functional (GAE) is used to provide an interface for processing advantage,
+// target value entries and not only, for the models.
 #[derive(TypedBuilder)]
 pub struct GeneralAdvantage {
     critic: Rc<model::Critic>,

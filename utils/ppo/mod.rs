@@ -1,3 +1,14 @@
+/// This program implements a bot that through the use of reinforcement learning
+/// learns how to efficiently play a game of Space Invaders.
+///
+/// To run this project make sure that you:
+///    - run a following command: pip install 'autorom[accept-rom-license]'
+///    - run a following command: pip install 'gym[atari]'
+///    - install [Rust](https://www.rust-lang.org/tools/install)
+///
+/// Project created by:
+///    Kajetan Welc
+///    Daniel Wirzba
 mod clipped_loss;
 mod collector;
 mod estimator;
@@ -15,6 +26,11 @@ use tch::nn::{self, OptimizerConfig, VarStore};
 use crate::env::Env as EnvTrait;
 use crate::model;
 
+/// Following code is organized into several modules (clipped loss, collector,
+/// estimator, sampler) that encapsulate different components of the PPO
+/// algorithm since it also defines structs that represent key elements of the
+/// algorithm, such as PPO for the main algorithm, Payload for holding data
+/// during training, and Builder for configuring the PPO instance
 #[must_use]
 pub struct PPO<Env>
 where
@@ -138,6 +154,9 @@ where
     }
 }
 
+/// The builder allows flexible configuration of parameters such as variable
+/// stores for actor and critic models, hyperparameters, learning rates,
+/// environment settings, and training parameters
 #[must_use]
 #[derive(Setters, Debug)]
 #[setters(strip_option)]

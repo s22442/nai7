@@ -1,3 +1,16 @@
+/// This program implements a bot that through the use of reinforcement learning
+/// learns how to efficiently play a game of Space Invaders.
+///
+/// To run this project make sure that you:
+///    - run a following command: pip install 'autorom[accept-rom-license]'
+///    - run a following command: pip install 'gym[atari]'
+///    - install [Rust](https://www.rust-lang.org/tools/install)
+///
+/// Project created by:
+///    Kajetan Welc
+///    Daniel Wirzba
+// This code defines neural network modules for an actor and a critic in reinforcement learning
+// using the PPO algorithm.
 use tch::{
     nn::{self, ConvConfig, LinearConfig, Module},
     Kind, Tensor,
@@ -36,6 +49,9 @@ fn build_seq(vs_path: &nn::Path, out_dim: usize) -> nn::Sequential {
     ))
 }
 
+/// The Actor struct and its later implementation constructs a neural network
+/// with convolution and linear layers to process observations and output
+/// actions
 #[must_use]
 #[derive(Debug)]
 pub struct Actor {
@@ -86,6 +102,10 @@ impl Actor {
     }
 }
 
+/// The Critic struct and its later implementation due to the value-based
+/// methods (like the one we are using - PPO) is especially essential in RL
+/// algorithms. Its main goal is to estimate the value function, which
+/// represents the expected return from a given state under a certain policy
 #[must_use]
 #[derive(Debug)]
 pub struct Critic {
